@@ -1,0 +1,71 @@
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ git checkout master
+Switched to branch 'master'
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ cat main.go
+package main
+
+import "fmt"
+
+func main(){
+	fmt.Println("Hey what's up")
+}
+
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ nano main.go
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ git status
+On branch master
+nothing to commit, working tree clean
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ git merge develop
+Auto-merging main.go
+CONFLICT (content): Merge conflict in main.go
+Automatic merge failed; fix conflicts and then commit the result.
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ cat main.go
+package main
+
+import "fmt"
+
+func main(){
+<<<<<<< HEAD
+	fmt.Println("Hey what's up")
+=======
+	fmt.Println("Hey what's ap")
+>>>>>>> develop
+}
+
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ nano main.go
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ git add main.go
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ git commit -m "vfgc"
+[master 0e88b08] vfgc
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ cat main.go 
+package main
+
+import "fmt"
+
+func main(){
+	fmt.Println("Hey what's up")
+}
+
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ git checkout develop
+Switched to branch 'develop'
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ cat main.go
+package main
+
+import "fmt"
+
+func main(){
+	fmt.Println("Hey what's ap")
+}
+
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ git merge master
+Updating 21f2b8a..0e88b08
+Fast-forward
+ main.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ cat main.go
+package main
+
+import "fmt"
+
+func main(){
+	fmt.Println("Hey what's up")
+}
+
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/newBranch$ 

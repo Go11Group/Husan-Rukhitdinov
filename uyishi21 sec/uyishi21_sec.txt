@@ -1,0 +1,212 @@
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git init
+Reinitialized existing Git repository in /home/husan/go/src/husan/.git/
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git add .
+warning: adding embedded git repository: main.go
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint: 
+hint: 	git submodule add <url> main.go
+hint: 
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint: 
+hint: 	git rm --cached main.go
+hint: 
+hint: See "git help submodule" for more information.
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch feature-1
+fatal: Not a valid object name: 'master'.
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch -b feature-1
+error: unknown switch `b'
+usage: git branch [<options>] [-r | -a] [--merged] [--no-merged]
+   or: git branch [<options>] [-l] [-f] <branch-name> [<start-point>]
+   or: git branch [<options>] [-r] (-d | -D) <branch-name>...
+   or: git branch [<options>] (-m | -M) [<old-branch>] <new-branch>
+   or: git branch [<options>] (-c | -C) [<old-branch>] <new-branch>
+   or: git branch [<options>] [-r | -a] [--points-at]
+   or: git branch [<options>] [-r | -a] [--format]
+
+Generic options
+    -v, --verbose         show hash and subject, give twice for upstream branch
+    -q, --quiet           suppress informational messages
+    -t, --track           set up tracking mode (see git-pull(1))
+    -u, --set-upstream-to <upstream>
+                          change the upstream info
+    --unset-upstream      unset the upstream info
+    --color[=<when>]      use colored output
+    -r, --remotes         act on remote-tracking branches
+    --contains <commit>   print only branches that contain the commit
+    --no-contains <commit>
+                          print only branches that don't contain the commit
+    --abbrev[=<n>]        use <n> digits to display object names
+
+Specific git-branch actions:
+    -a, --all             list both remote-tracking and local branches
+    -d, --delete          delete fully merged branch
+    -D                    delete branch (even if not merged)
+    -m, --move            move/rename a branch and its reflog
+    -M                    move/rename a branch, even if target exists
+    -c, --copy            copy a branch and its reflog
+    -C                    copy a branch, even if target exists
+    -l, --list            list branch names
+    --show-current        show current branch name
+    --create-reflog       create the branch's reflog
+    --edit-description    edit the description for the branch
+    -f, --force           force creation, move/rename, deletion
+    --merged <commit>     print only branches that are merged
+    --no-merged <commit>  print only branches that are not merged
+    --column[=<style>]    list branches in columns
+    --sort <key>          field name to sort on
+    --points-at <object>  print only branches of the object
+    -i, --ignore-case     sorting and filtering are case insensitive
+    --format <format>     format to use for the output
+
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch -M feature-1
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git commit -m "f1"
+[feature-1 (root-commit) 8c37f56] f1
+ 1 file changed, 1 insertion(+)
+ create mode 160000 main.go
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch feature-2
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git add .
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git commit -m "f2"
+On branch feature-1
+nothing to commit, working tree clean
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch
+* feature-1
+  feature-2
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ touch main.go
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ nano main.go
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git status
+On branch feature-1
+nothing to commit, working tree clean
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch
+* feature-1
+  feature-2
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ cat main.go
+cat: main.go: Is a directory
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ nano main.go
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ cat main.go/
+cat: main.go/: Is a directory
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ cat feature-1
+cat: feature-1: No such file or directory
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ cat main.go
+cat: main.go: Is a directory
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git status
+On branch feature-1
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	cdsx
+
+nothing added to commit but untracked files present (use "git add" to track)
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git add .
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git commit -m "f1"
+[feature-1 6ba914c] f1
+ 1 file changed, 9 insertions(+)
+ create mode 100644 cdsx
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ cat cdsx
+package main
+
+import "fmt"
+
+func main(){
+	for i := 0; i < 10; i++{
+		fmt.Println(i)
+	}
+}
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch
+* feature-1
+  feature-2
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git status
+On branch feature-1
+nothing to commit, working tree clean
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git checkout
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch
+* feature-1
+  feature-2
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git checkout feature-2
+Switched to branch 'feature-2'
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch
+  feature-1
+* feature-2
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ nano main.go
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git add .
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git commit -m "f2"
+[feature-2 1912bad] f2
+ 1 file changed, 7 insertions(+)
+ create mode 100644 cdsx
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch main
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git branch
+  feature-1
+* feature-2
+  main
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git checkout main 
+Switched to branch 'main'
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git merge feature-1
+Auto-merging cdsx
+CONFLICT (add/add): Merge conflict in cdsx
+Automatic merge failed; fix conflicts and then commit the result.
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ cat cdsx
+package main
+
+import "fmt"
+
+func main(){
+<<<<<<< HEAD
+	fmt.Println("Hello dear")
+=======
+	for i := 0; i < 10; i++{
+		fmt.Println(i)
+	}
+>>>>>>> feature-1
+}
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ nano cdsx
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git status
+On branch main
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+	both added:      cdsx
+
+no changes added to commit (use "git add" and/or "git commit -a")
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git add .
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git status
+On branch main
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+	modified:   cdsx
+
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git commit -m "m1"
+[main c684b87] m1
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ git log
+commit c684b879b904883fbba89ff7a87e76def759c1f8 (HEAD -> main)
+Merge: 1912bad 6ba914c
+Author: Husan <hrukhitdinov@gmail.com>
+Date:   Wed May 22 00:41:53 2024 +0500
+
+    m1
+
+commit 1912badbe84133ea73ff1152919698cadd24509b (feature-2)
+Author: Husan <hrukhitdinov@gmail.com>
+Date:   Wed May 22 00:38:37 2024 +0500
+
+    f2
+
+commit 6ba914ce3f73dbe1c475ad721292d02abf2ecdf4 (feature-1)
+Author: Husan <hrukhitdinov@gmail.com>
+Date:   Wed May 22 00:35:06 2024 +0500
+
+    f1
+
+commit 8c37f56eb8e28d1241c0cf43d2d846d53515e31d
+Author: Husan <hrukhitdinov@gmail.com>
+Date:   Wed May 22 00:24:09 2024 +0500
+
+    f1
+husan@husan-HP-Laptop-15-dy2xxx:~/go/src/husan$ 
