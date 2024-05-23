@@ -1,0 +1,174 @@
+husan@husan-HP-Laptop-15-dy2xxx:~$ sudo -u postgres psql
+[sudo] password for husan: 
+Sorry, try again.
+[sudo] password for husan: 
+psql (16.2 (Ubuntu 16.2-1.pgdg22.04+1), server 14.11 (Ubuntu 14.11-1.pgdg22.04+1))
+Type "help" for help.
+
+postgres=# \c
+psql (16.2 (Ubuntu 16.2-1.pgdg22.04+1), server 14.11 (Ubuntu 14.11-1.pgdg22.04+1))
+You are now connected to database "postgres" as user "postgres".
+postgres=# \c university;
+psql (16.2 (Ubuntu 16.2-1.pgdg22.04+1), server 14.11 (Ubuntu 14.11-1.pgdg22.04+1))
+You are now connected to database "university" as user "postgres".
+university=# select * from students;
+ id | first_name | second_name | age | gender | phone_number  
+----+------------+-------------+-----+--------+---------------
+  1 | Anvar      | Rahimov     |  25 | MALE   | +998901234567
+  2 | Gayrat     | Bahromov    |  31 | MALE   | +998924324362
+  3 | Murodjon   | Javlonov    |  21 | MALE   | +998902316985
+  4 | Zulfiya    | Bahromova   |  22 | FEMALE | +998924324361
+  5 | Muqaddam   | Latipova    |  23 | FEMALE | +998974324363
+  6 | Hamiddulla | Kamilov     |  25 | MALE   | +998974324364
+  7 | Jackie     | Chan        |  40 | MALE   | +912341000011
+  8 | Aziz       | Shakirov    |  16 | MALE   | +998924314365
+  9 | Toxir      | Jalilov     |  22 | MALE   | +998984424363
+ 10 | Gulom      | Haydar      |  28 | MALE   | +998974376653
+ 11 | Asal       | Vohidova    |  22 | FEMALE | 
+ 12 | Qobil      | Hasanov     |  32 | MALE   | +998954326664
+ 13 | Jan-Clod   | van Damm    |  63 | MALE   | +955332226677
+ 14 | Botir      | Zokirov     |  19 | MALE   | +998954345365
+ 15 | Malika     | Yuldasheva  | 235 | FEMALE | +998934324311
+ 16 | Juma       | Kamilov     |  16 | MALE   | +998924324322
+ 17 | Aziza      | Zokirova    |  20 | FEMALE | +998941314333
+ 18 | Jumagul    | Bozorova    |  27 | FEMALE | +998934324344
+ 19 | Aziz       | Azizov      |  24 | MALE   | +998904314123
+ 20 | Angela     | Merkel      |  69 | FEMALE | +944119998877
+ 21 | Qudrat     | Rustamov    |  26 | MALE   | +998984324355
+ 22 | Nodirjon   | Quvvatov    |  18 | MALE   | +998994314534
+(22 rows)
+ 
+
+		//Ma'lumotni UPDATE qilish
+
+// Bu yerda 1chi id dagi Anvarning familiyasiga o'zgartirish kiritildi
+
+university=# UPDATE students SET second_name = 'Qodirov' WHERE first_name = 'Anvar';
+UPDATE 1
+university=# SELECT * from students
+university-# ;
+ id | first_name | second_name | age | gender | phone_number  
+----+------------+-------------+-----+--------+---------------
+  2 | Gayrat     | Bahromov    |  31 | MALE   | +998924324362
+  3 | Murodjon   | Javlonov    |  21 | MALE   | +998902316985
+  4 | Zulfiya    | Bahromova   |  22 | FEMALE | +998924324361
+  5 | Muqaddam   | Latipova    |  23 | FEMALE | +998974324363
+  6 | Hamiddulla | Kamilov     |  25 | MALE   | +998974324364
+  7 | Jackie     | Chan        |  40 | MALE   | +912341000011
+  8 | Aziz       | Shakirov    |  16 | MALE   | +998924314365
+  9 | Toxir      | Jalilov     |  22 | MALE   | +998984424363
+ 10 | Gulom      | Haydar      |  28 | MALE   | +998974376653
+ 11 | Asal       | Vohidova    |  22 | FEMALE | 
+ 12 | Qobil      | Hasanov     |  32 | MALE   | +998954326664
+ 13 | Jan-Clod   | van Damm    |  63 | MALE   | +955332226677
+ 14 | Botir      | Zokirov     |  19 | MALE   | +998954345365
+ 15 | Malika     | Yuldasheva  | 235 | FEMALE | +998934324311
+ 16 | Juma       | Kamilov     |  16 | MALE   | +998924324322
+ 17 | Aziza      | Zokirova    |  20 | FEMALE | +998941314333
+ 18 | Jumagul    | Bozorova    |  27 | FEMALE | +998934324344
+ 19 | Aziz       | Azizov      |  24 | MALE   | +998904314123
+ 20 | Angela     | Merkel      |  69 | FEMALE | +944119998877
+ 21 | Qudrat     | Rustamov    |  26 | MALE   | +998984324355
+ 22 | Nodirjon   | Quvvatov    |  18 | MALE   | +998994314534
+  1 | Anvar      | Qodirov     |  25 | MALE   | +998901234567
+(22 rows)
+
+		
+			//Ma'lumotni Delete qilish
+//Bu yerda id si 2ga teng bo'lgan ma'lumot o'chirildi
+
+university=# DELETE FROM students WHERE id = 2; 
+DELETE 1
+university=# SELECT * from students
+;
+ id | first_name | second_name | age | gender | phone_number  
+----+------------+-------------+-----+--------+---------------
+  3 | Murodjon   | Javlonov    |  21 | MALE   | +998902316985
+  4 | Zulfiya    | Bahromova   |  22 | FEMALE | +998924324361
+  5 | Muqaddam   | Latipova    |  23 | FEMALE | +998974324363
+  6 | Hamiddulla | Kamilov     |  25 | MALE   | +998974324364
+  7 | Jackie     | Chan        |  40 | MALE   | +912341000011
+  8 | Aziz       | Shakirov    |  16 | MALE   | +998924314365
+  9 | Toxir      | Jalilov     |  22 | MALE   | +998984424363
+ 10 | Gulom      | Haydar      |  28 | MALE   | +998974376653
+ 11 | Asal       | Vohidova    |  22 | FEMALE | 
+ 12 | Qobil      | Hasanov     |  32 | MALE   | +998954326664
+ 13 | Jan-Clod   | van Damm    |  63 | MALE   | +955332226677
+ 14 | Botir      | Zokirov     |  19 | MALE   | +998954345365
+ 15 | Malika     | Yuldasheva  | 235 | FEMALE | +998934324311
+ 16 | Juma       | Kamilov     |  16 | MALE   | +998924324322
+ 17 | Aziza      | Zokirova    |  20 | FEMALE | +998941314333
+ 18 | Jumagul    | Bozorova    |  27 | FEMALE | +998934324344
+ 19 | Aziz       | Azizov      |  24 | MALE   | +998904314123
+ 20 | Angela     | Merkel      |  69 | FEMALE | +944119998877
+ 21 | Qudrat     | Rustamov    |  26 | MALE   | +998984324355
+ 22 | Nodirjon   | Quvvatov    |  18 | MALE   | +998994314534
+  1 | Anvar      | Qodirov     |  25 | MALE   | +998901234567
+(21 rows)
+
+		//Ma'lumotlarni GROUP BY orqali chiqarish
+//Bu yerda genderi Male bo'lgan talabar ma'lumotlari chiqarilgan
+
+university=# SELECT first_name,second_name FROM students WHERE gender = 'MALE' GROUP BY first_name,second_name;
+ first_name | second_name 
+------------+-------------
+ Anvar      | Qodirov
+ Aziz       | Azizov
+ Aziz       | Shakirov
+ Botir      | Zokirov
+ Gulom      | Haydar
+ Hamiddulla | Kamilov
+ Jackie     | Chan
+ Jan-Clod   | van Damm
+ Juma       | Kamilov
+ Murodjon   | Javlonov
+ Nodirjon   | Quvvatov
+ Qobil      | Hasanov
+ Qudrat     | Rustamov
+ Toxir      | Jalilov
+(14 rows)
+
+		//Ma'lumotlarni ORDER BY orqali tartiblash
+//Bu yerda ma'lumotlarni ismlari Alfabit tartibida chiqarildi
+
+university=# SELECT * FROM students ORDER BY first_name ASC;
+ id | first_name | second_name | age | gender | phone_number  
+----+------------+-------------+-----+--------+---------------
+ 20 | Angela     | Merkel      |  69 | FEMALE | +944119998877
+  1 | Anvar      | Qodirov     |  25 | MALE   | +998901234567
+ 11 | Asal       | Vohidova    |  22 | FEMALE | 
+  8 | Aziz       | Shakirov    |  16 | MALE   | +998924314365
+ 19 | Aziz       | Azizov      |  24 | MALE   | +998904314123
+ 17 | Aziza      | Zokirova    |  20 | FEMALE | +998941314333
+ 14 | Botir      | Zokirov     |  19 | MALE   | +998954345365
+ 10 | Gulom      | Haydar      |  28 | MALE   | +998974376653
+  6 | Hamiddulla | Kamilov     |  25 | MALE   | +998974324364
+  7 | Jackie     | Chan        |  40 | MALE   | +912341000011
+ 13 | Jan-Clod   | van Damm    |  63 | MALE   | +955332226677
+ 16 | Juma       | Kamilov     |  16 | MALE   | +998924324322
+ 18 | Jumagul    | Bozorova    |  27 | FEMALE | +998934324344
+ 15 | Malika     | Yuldasheva  | 235 | FEMALE | +998934324311
+  5 | Muqaddam   | Latipova    |  23 | FEMALE | +998974324363
+  3 | Murodjon   | Javlonov    |  21 | MALE   | +998902316985
+ 22 | Nodirjon   | Quvvatov    |  18 | MALE   | +998994314534
+ 12 | Qobil      | Hasanov     |  32 | MALE   | +998954326664
+ 21 | Qudrat     | Rustamov    |  26 | MALE   | +998984324355
+  9 | Toxir      | Jalilov     |  22 | MALE   | +998984424363
+  4 | Zulfiya    | Bahromova   |  22 | FEMALE | +998924324361
+(21 rows)
+
+
+		//Ma'lumotlarni JOIN qilish
+
+//JOIN operatori bir necha jadvallardan ma'lumotlarni birlashtirish
+ uchun ishlatiladi. JOIN operatori yordamida jadvallar orasidagi
+ aloqalarni aniqlab, tegishli ma'lumotlarni birlashtirilgan natijada
+ olish mumkin.
+Bunda, JOIN operatorining asosiy turlari quyidagilar:
+ INNER JOIN: Faqat ikkala jadvalda ham mavjud bo'lgan ma'lumotlarni
+ qaytaradi.
+ LEFT JOIN: Chap jadvaldagi barcha ma'lumotlarni qaytaradi,
+ shuningdek o'ng jadvaldagi tegishli ma'lumotlarni ham.
+ RIGHT JOIN: O'ng jadvaldagi barcha ma'lumotlarni qaytaradi,
+ shuningdek chap jadvaldagi tegishli ma'lumotlarni ham.
+ FULL JOIN: Ikkala jadvaldagi barcha ma'lumotlarni qaytaradi.
