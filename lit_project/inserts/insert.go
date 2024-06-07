@@ -8,7 +8,7 @@ import (
 )
 
 func InsertUser(w http.ResponseWriter, r *http.Request) (model.Users, error) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodPost {
 		w.Write([]byte("Bu so'rov get so'rovi emas?"))
 	}
 
@@ -27,7 +27,7 @@ func InsertUser(w http.ResponseWriter, r *http.Request) (model.Users, error) {
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) (model.Users, error) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodPut {
 		w.Write([]byte("Bu so'rov get so'rovi emas?"))
 	}
 
@@ -46,7 +46,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) (model.Users, error) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) (model.Users, error) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodDelete {
 		w.Write([]byte("Bu so'rov get so'rovi emas?"))
 	}
 
@@ -55,17 +55,17 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) (model.Users, error) {
 		return model.Users{}, err
 	}
 
-	var userUpdate model.Users
-	err = json.Unmarshal(byt, &userUpdate)
+	var userDelete model.Users
+	err = json.Unmarshal(byt, &userDelete)
 	if err != nil {
 		return model.Users{}, err
 	}
 
-	return userUpdate, nil
+	return userDelete, nil
 }
 
 func InsertProduct(w http.ResponseWriter, r *http.Request) (model.Products, error) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodPost {
 		w.Write([]byte("Bu so'rov get so'rovi emas?"))
 	}
 
@@ -84,7 +84,7 @@ func InsertProduct(w http.ResponseWriter, r *http.Request) (model.Products, erro
 }
 
 func UpdateProduct(w http.ResponseWriter, r *http.Request) (model.Products, error) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodPut {
 		w.Write([]byte("Bu so'rov get so'rovi emas?"))
 	}
 
@@ -103,7 +103,7 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) (model.Products, erro
 }
 
 func DeleteProduct(w http.ResponseWriter, r *http.Request) (model.Products, error) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodDelete {
 		w.Write([]byte("Bu so'rov get so'rovi emas?"))
 	}
 
@@ -112,11 +112,11 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request) (model.Products, erro
 		return model.Products{}, err
 	}
 
-	var productUpdate model.Products
-	err = json.Unmarshal(byt, &productUpdate)
+	var productDelete model.Products
+	err = json.Unmarshal(byt, &productDelete)
 	if err != nil {
 		return model.Products{}, err
 	}
 
-	return productUpdate, nil
+	return productDelete, nil
 }

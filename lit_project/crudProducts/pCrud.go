@@ -22,7 +22,7 @@ func (i *CrudProductRepo) InsertProduct(w http.ResponseWriter, r *http.Request) 
 		panic(err)
 	}
 
-	_, err = i.db.Exec("insert into products(id,name,description,price,stock_quantity) values($1,$2,$3,$4)",
+	_, err = i.db.Exec("insert into products(id,name,price,quantity) values($1,$2,$3,$4)",
 		&product.Id, &product.Name, &product.Price, &product.Quantity)
 	if err != nil {
 		panic(err)
@@ -35,7 +35,7 @@ func (u *CrudProductRepo) UpdateProduct(w http.ResponseWriter, r *http.Request) 
 		panic(err)
 	}
 
-	_, err = u.db.Exec("update products set name=$1, description=$2,price=$3,stock_quantity=&4  where id=$5",
+	_, err = u.db.Exec("update products set name=$1,price=$2,quantity=&3  where id=$5",
 		&up.Name, &up.Price, &up.Quantity, &up.Id)
 
 	if err != nil {

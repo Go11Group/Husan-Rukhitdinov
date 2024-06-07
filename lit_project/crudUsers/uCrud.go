@@ -22,7 +22,7 @@ func (i *CrudUsersRepo) InsertUsers(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	_, err = i.db.Exec("insert into users(id,username,email,password) values($1,$2,$3,$4)",
+	_, err = i.db.Exec("insert into users(id,firstname,lastname,age) values($1,$2,$3,$4)",
 		&user.Id, &user.Firstname, &user.Lastname, &user.Age)
 	if err != nil {
 		panic(err)
@@ -35,7 +35,7 @@ func (u *CrudUsersRepo) UpdateUsers(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	_, err = u.db.Exec("update users set username=$1, email=$2,pasword=$3 where id=$4",
+	_, err = u.db.Exec("update users set firstname=$1, lastname=$2,age=$3 where id=$4",
 		&up.Firstname, &up.Lastname, &up.Age, &up.Id)
 
 	if err != nil {
