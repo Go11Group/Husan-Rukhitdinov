@@ -2,38 +2,40 @@ package crudusers
 
 import (
 	"database/sql"
-	"gorilla/model"
+	"fmt"
+	"my_pro/model"
 )
 
 type CrudUsersRepo struct {
-	db *sql.DB
+	Db *sql.DB
 }
 
 func NewUsersRepo(db *sql.DB) *CrudUsersRepo {
-	return &CrudUsersRepo{db: db}
+	return &CrudUsersRepo{Db: db}
 }
 
 func (c *CrudUsersRepo) CreateUsers(user model.Users) error{
-	_, err := c.db.Exec("insert into users(user_id, username,email,password_hash,created_at) values($1,$2,$3,$4,$5)",
-		&user.UserID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
+	_, err := c.Db.Exec("insert into users(username,email,password_hash,created_at) values($1,$2,$3,$4)",
+		&user.Username, &user.Email, &user.Password, &user.CreatedAt)
 	if err != nil {
+		fmt.Println(err)
 		return  err
 	}
 	return err
 }
 
-func (u *CrudUsersRepo) UpdateUsers(user model.Users) error {
-	_, err := u.db.Exec("update users set username=$1, email=$2, password_hash=$3, created_at=$4 where user_id=$5",
-		&user.Username, &user.Email, &user.Password, &user.CreatedAt, &user.UserID)
+func (u *CrudUsersRepo) UpdateUsers(user model.Users,id string) error {
+	_, err := u.Db.Exec("update users set username=$1, email=$2, password_hash=$3, created_at=$4 where user_id=$5",
+		&user.Username, &user.Email, &user.Password, &user.CreatedAt, &id)
 	if err != nil {
 		return err
 	}
 	return err
 }
 
-func (d *CrudUsersRepo) DeleteUsers(user model.Users) error{
+func (d *CrudUsersRepo) DeleteUsers(id string) error{
 
-	_, err := d.db.Exec("delete from users where user_id=$1", &user.UserID)
+	_, err := d.Db.Exec("delete from users where user_id=$1", &id)
 	if err != nil {
 		return err 
 	}
@@ -41,7 +43,7 @@ func (d *CrudUsersRepo) DeleteUsers(user model.Users) error{
 }
 
 func (re *CrudUsersRepo) ReadUsers() ([]model.Users, error) {
-	row, err := re.db.Query("SELECT user_id, username, email, password, created_at FROM users")
+	row, err := re.Db.Query("SELECT user_id, username, email, password_hash, created_at FROM users")
 	if err != nil {
 		return nil, err
 	}

@@ -2,44 +2,49 @@ package crudsolvedproblems
 
 import (
 	"database/sql"
-	"gorilla/model"
+	"fmt"
+	"my_pro/model"
 )
 
 type CrudSolvedProblemRepo struct {
-	db *sql.DB
+	Db *sql.DB
 }
 
 func NewSolvedProblemsRepo(db *sql.DB) *CrudSolvedProblemRepo {
-	return &CrudSolvedProblemRepo{db: db}
+	return &CrudSolvedProblemRepo{Db: db}
 }
 
-func (c *CrudSolvedProblemRepo) CreateSolvedProblems(solvedProb model.SolvedProblem) {
-	_, err := c.db.Exec("insert into solved_problems(id, user_id, problem_id,solved_at) values($1,$2,$3,$4)",
-		&solvedProb.ID, &solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt)
+func (c *CrudSolvedProblemRepo) CreateSolvedProblems(solvedProb model.SolvedProblem) error{
+	_, err := c.Db.Exec("insert into solved_problems(user_id, problem_id,solved_at) values($1,$2,$3)",
+		&solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt)
 	if err != nil {
-		panic(err)
+		fmt.Print("000000000000000000",err)
+		return err
 	}
+	return nil
 }
 
-func (u *CrudSolvedProblemRepo) UpdateSolvedProblems(solvedProb model.SolvedProblem) {
-	_, err := u.db.Exec("update solved_problems set user_id=$1, problem_id=$2, solved_at=$3, where id=$4",
-		&solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt, &solvedProb.ID)
+func (u *CrudSolvedProblemRepo) UpdateSolvedProblems(solvedProb model.SolvedProblem,id string) error{
+	_, err := u.Db.Exec("update solved_problems set user_id=$1, problem_id=$2, solved_at=$3, where id=$4",
+		&solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt, &id)
 	if err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }
 
-func (d *CrudSolvedProblemRepo) DeleteSolvedProblems(solvedProb model.SolvedProblem) {
-	_, err := d.db.Exec("delete from solved_problems where id=$1", &solvedProb.ID)
+func (d *CrudSolvedProblemRepo) DeleteSolvedProblems(id string) error {
+	_, err := d.Db.Exec("delete from solved_problems where id=$1", &id)
 	if err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }
 
-func (re *CrudSolvedProblemRepo) ReadSolvedProblems(solvedProb model.SolvedProblem) {
-	row, err := re.db.Query("select * from solved_problems")
+func (re *CrudSolvedProblemRepo) ReadSolvedProblems()(error, []model.SolvedProblem) {
+	row, err := re.Db.Query("select * from solved_problems")
 	if err != nil {
-		return
+		return err, nil
 	}
 	defer row.Close()
 
@@ -48,9 +53,10 @@ func (re *CrudSolvedProblemRepo) ReadSolvedProblems(solvedProb model.SolvedProbl
 		var sol_problem model.SolvedProblem
 		err = row.Scan(&sol_problem.ID, &sol_problem.UserID, &sol_problem.ProblemID)
 		if err != nil {
-			return
+			return err,nil
 		}
 
 		sproblems = append(sproblems, sol_problem)
 	}
+	return nil, sproblems
 }

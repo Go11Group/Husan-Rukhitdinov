@@ -1,27 +1,26 @@
 CREATE TABLE Problems (
-    problem_id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
+    problem_id uuid PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+    title VARCHAR(255),
     difficulty VARCHAR(10) CHECK (difficulty IN ('Easy', 'Medium', 'Hard')) NOT NULL,
     description TEXT
 );
 
 CREATE TABLE Users (
-    user_id INT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    user_id uuid PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+    username VARCHAR(50),
+    email VARCHAR(100),
+    password_hash VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Solved_Problems (
-    id SERIAL PRIMARY KEY,
-    user_id INT,
-    problem_id INT,
+CREATE TABLE solved_problems (
+    id uuid PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+    user_id uuid not null REFERENCES users(user_id),
+    problem_id uuid NOT NULL REFERENCES Problems(problem_id),
     solved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_id, problem_id),
-    FOREIGN KEY (user_id) REFERENCES Users(user_id),
-    FOREIGN KEY (problem_id) REFERENCES Problems(problem_id)
+   
 );
+drop table users;
 
 
 INSERT INTO Problems (title, difficulty, description) VALUES

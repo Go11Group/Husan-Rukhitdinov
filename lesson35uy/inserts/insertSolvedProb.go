@@ -3,15 +3,15 @@ package inserts
 import (
 	"encoding/json"
 	"fmt"
-	crudsolvedproblems "gorilla/crudSolvedProblems"
-	"gorilla/model"
-	"gorilla/storage/postgres"
+	crudsolvedproblems "my_pro/crudSolvedProblems"
+	"my_pro/model"
+	"my_pro/storage/postgres"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-type NewSolvedProblemHttp struct {
-	SolProblem *crudsolvedproblems.CrudSolvedProblemRepo
-}
+
 
 func NewSolProblemInsert() *crudsolvedproblems.CrudSolvedProblemRepo {
 	db, err := postgres.ConnectDB()
@@ -29,53 +29,65 @@ func CreateSProblem(w http.ResponseWriter, r *http.Request) {
 	solvedProblem := NewSolProblemInsert()
 	solveProblem := model.SolvedProblem{}
 
-	err := json.NewDecoder(r.Body).Decode(&solvedProblem)
+	err := json.NewDecoder(r.Body).Decode(&solveProblem)
+	if err != nil {
+		// fmt.Println(err)
+		w.WriteHeader(http.StatusBadGateway)
+	}
+	fmt.Println("=========================",solveProblem.ProblemID)
+	fmt.Println("+++++++++++++++",solveProblem.UserID)
+	err = solvedProblem.CreateSolvedProblems(solveProblem)
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusBadGateway)
 	}
-	fmt.Println(solvedProblem)
-	err = solvedProblem.CreateSolvedProblem(solveProblem)
-	if err != nil {
-		fmt.Println(err)
-		w.WriteHeader(http.StatusBadGateway)
-	}
+	_,err = w.Write([]byte ("QO'SHILDI!"))
 }
 
-func (us *NewHttp) UpdateSProblem(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPut {
-		http.Error(w, "It's not PUT request!", http.StatusMethodNotAllowed)
-		return
-	}
-	var solvedProblem model.SolvedProblem
-	err := json.NewDecoder(r.Body).Decode(&solvedProblem)
+func UpdateSProblem(w http.ResponseWriter, r *http.Request) {
+	solproblemInsert := NewSolProblemInsert()
+	param := mux.Vars(r)
+	id := param["id"]
+	solProblem := model.SolvedProblem{}
+	err := json.NewDecoder(r.Body).Decode(&solProblem)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusInternalServerError)		
 	}
-	err = us.User.UpdateSolvedProblem(solvedProblem)
+	err = solproblemInsert.UpdateSolvedProblems(solProblem,id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		w.WriteHeader(http.StatusBadRequest)
 	}
-	json.NewEncoder(w).Encode(solvedProblem)
+	w.WriteHeader(http.StatusOK)
 }
 
-func (us *NewHttp) DeleteSProblem(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodDelete {
-		http.Error(w, "It's not DELETE request!", http.StatusMethodNotAllowed)
-		return
-	}
-	var solvedProblem model.SolvedProblem
-	err := json.NewDecoder(r.Body).Decode(&solvedProblem)
+func DeleteSProblem(w http.ResponseWriter, r *http.Request) {
+	solproblemInsert := NewSolProblemInsert()
+	param := mux.Vars(r)
+	id := param["id"]
+	fmt.Println(id)
+	err := solproblemInsert.DeleteSolvedProblems(id)
+
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		w.WriteHeader(http.StatusBadRequest)
 	}
-	err = us.User.DeleteSolvedProblem(solvedProblem)
+	w.WriteHeader(http.StatusOK)
+}
+
+func ReadAllSProblem(w http.ResponseWriter, r *http.Request) {
+	problemSolveHand := NewSolProblemInsert()
+	err,a := problemSolveHand.ReadSolvedProblems()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		panic(err)
 	}
-	json.NewEncoder(w).Encode(solvedProblem)
+	fmt.Println(a)
+	solve_problems,err := json.Marshal(a)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+	}
+	_, err = w.Write(solve_problems)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+	w.WriteHeader(http.StatusOK)
+
 }
