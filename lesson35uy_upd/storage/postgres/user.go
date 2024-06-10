@@ -1,4 +1,4 @@
-package crudusers
+package postgres
 
 import (
 	"database/sql"

@@ -1,4 +1,4 @@
-package crudsolvedproblems
+package postgres
 
 import (
 	"database/sql"
@@ -14,17 +14,17 @@ func NewSolvedProblemsRepo(db *sql.DB) *CrudSolvedProblemRepo {
 	return &CrudSolvedProblemRepo{Db: db}
 }
 
-func (c *CrudSolvedProblemRepo) CreateSolvedProblems(solvedProb model.SolvedProblem) error{
+func (c *CrudSolvedProblemRepo) CreateSolvedProblems(solvedProb model.SolvedProblem) error {
 	_, err := c.Db.Exec("insert into solved_problems(user_id, problem_id,solved_at) values($1,$2,$3)",
 		&solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt)
 	if err != nil {
-		fmt.Print("000000000000000000",err)
+		fmt.Print("000000000000000000", err)
 		return err
 	}
 	return nil
 }
 
-func (u *CrudSolvedProblemRepo) UpdateSolvedProblems(solvedProb model.SolvedProblem,id string) error{
+func (u *CrudSolvedProblemRepo) UpdateSolvedProblems(solvedProb model.SolvedProblem, id string) error {
 	_, err := u.Db.Exec("update solved_problems set user_id=$1, problem_id=$2, solved_at=$3, where id=$4",
 		&solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt, &id)
 	if err != nil {
@@ -41,7 +41,7 @@ func (d *CrudSolvedProblemRepo) DeleteSolvedProblems(id string) error {
 	return nil
 }
 
-func (re *CrudSolvedProblemRepo) ReadSolvedProblems()(error, []model.SolvedProblem) {
+func (re *CrudSolvedProblemRepo) ReadSolvedProblems() (error, []model.SolvedProblem) {
 	row, err := re.Db.Query("select * from solved_problems")
 	if err != nil {
 		return err, nil
@@ -53,7 +53,7 @@ func (re *CrudSolvedProblemRepo) ReadSolvedProblems()(error, []model.SolvedProbl
 		var sol_problem model.SolvedProblem
 		err = row.Scan(&sol_problem.ID, &sol_problem.UserID, &sol_problem.ProblemID)
 		if err != nil {
-			return err,nil
+			return err, nil
 		}
 
 		sproblems = append(sproblems, sol_problem)

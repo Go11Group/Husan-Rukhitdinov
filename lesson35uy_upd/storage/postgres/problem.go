@@ -1,7 +1,8 @@
-package crudproblems
+package postgres
 
 import (
 	"database/sql"
+	"fmt"
 	"my_pro/model"
 )
 
@@ -43,6 +44,7 @@ func (d *CrudProblemsRepo) DeleteProblems(id string) error {
 func (re *CrudProblemsRepo) ReadProblems() ([]model.Problem, error) {
 	row, err := re.Db.Query("select * from problems")
 	if err != nil {
+		fmt.Println("0000000000",err)
 		return nil, err
 	}
 	defer row.Close()
