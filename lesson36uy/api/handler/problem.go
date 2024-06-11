@@ -2,6 +2,7 @@ package handler
 
 import (
 	"my_pro/model"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,7 +11,11 @@ import (
 func (h *Handler) CreateProblem(c *gin.Context) {
 
 	var problem model.Problem
-	err := h.problem.CreateProblems(problem)
+	err := c.ShouldBindJSON(problem)
+	if err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+	}
+	err = h.problem.CreateProblems(problem)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 	}

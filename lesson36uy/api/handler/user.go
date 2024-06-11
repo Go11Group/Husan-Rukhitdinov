@@ -2,6 +2,7 @@ package handler
 
 import (
 	"my_pro/model"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +12,11 @@ func (h *Handler) CreateUser(c *gin.Context) {
 
 	user := model.Users{}
 
-	err := h.user.CreateUsers(user)
+	err := c.ShouldBindJSON(user)
+	if err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+	}
+	err = h.user.CreateUsers(user)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 	}
