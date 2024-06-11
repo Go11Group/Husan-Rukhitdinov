@@ -20,7 +20,7 @@ func main() {
 	problemRepo := postgres.NewProblemsRepo(db)
 	solvedProblemRepo := postgres.NewSolvedProblemsRepo(db)
 
-	h := handler.NewHandler(db, userRepo, problemRepo, solvedProblemRepo)
+	h := handler.NewHandler(userRepo, problemRepo, solvedProblemRepo)
 
 	h.HandlerAPI()
 

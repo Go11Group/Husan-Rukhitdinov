@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"database/sql"
-	"fmt"
 	"my_pro/model"
 )
 
@@ -18,7 +17,6 @@ func (c *CrudSolvedProblemRepo) CreateSolvedProblems(solvedProb model.SolvedProb
 	_, err := c.Db.Exec("insert into solved_problems(user_id, problem_id,solved_at) values($1,$2,$3)",
 		&solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt)
 	if err != nil {
-		fmt.Print("000000000000000000", err)
 		return err
 	}
 	return nil
@@ -26,7 +24,7 @@ func (c *CrudSolvedProblemRepo) CreateSolvedProblems(solvedProb model.SolvedProb
 
 func (u *CrudSolvedProblemRepo) UpdateSolvedProblems(solvedProb model.SolvedProblem, id string) error {
 	_, err := u.Db.Exec("update solved_problems set user_id=$1, problem_id=$2, solved_at=$3, where id=$4",
-		&solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt, &id)
+		&solvedProb.UserID, &solvedProb.ProblemID, &solvedProb.SolvedAt, &solvedProb.ID)
 	if err != nil {
 		return err
 	}
@@ -51,7 +49,7 @@ func (re *CrudSolvedProblemRepo) ReadSolvedProblems() (error, []model.SolvedProb
 	var sproblems []model.SolvedProblem
 	for row.Next() {
 		var sol_problem model.SolvedProblem
-		err = row.Scan(&sol_problem.ID, &sol_problem.UserID, &sol_problem.ProblemID)
+		err = row.Scan(&sol_problem.ID, &sol_problem.UserID, &sol_problem.ProblemID, sol_problem.SolvedAt)		
 		if err != nil {
 			return err, nil
 		}

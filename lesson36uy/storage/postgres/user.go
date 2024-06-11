@@ -24,9 +24,9 @@ func (c *CrudUsersRepo) CreateUsers(user model.Users) error{
 	return err
 }
 
-func (u *CrudUsersRepo) UpdateUsers(user model.Users,id string) error {
+func (u *CrudUsersRepo) UpdateUsers(user model.Users) error {
 	_, err := u.Db.Exec("update users set username=$1, email=$2, password_hash=$3, created_at=$4 where user_id=$5",
-		&user.Username, &user.Email, &user.Password, &user.CreatedAt, &id)
+		&user.Username, &user.Email, &user.Password, &user.CreatedAt, &user.UserID)
 	if err != nil {
 		return err
 	}

@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"database/sql"
-	"fmt"
 	"my_pro/model"
 )
 
@@ -23,9 +22,9 @@ func (c *CrudProblemsRepo) CreateProblems(problem model.Problem) error {
 	return nil
 }
 
-func (u *CrudProblemsRepo) UpdateProblems(id string, problem model.Problem) error {
+func (u *CrudProblemsRepo) UpdateProblems(problem model.Problem) error {
 	_, err := u.Db.Exec("update problems set title=$1, difficultly=$2, description=$3, where problem_id=$4",
-		&problem.Title, &problem.Difficulty, &problem.Description, &id)
+		&problem.Title, &problem.Difficulty, &problem.Description, &problem.ProblemID)
 	if err != nil {
 		return err
 	}
@@ -44,7 +43,6 @@ func (d *CrudProblemsRepo) DeleteProblems(id string) error {
 func (re *CrudProblemsRepo) ReadProblems() ([]model.Problem, error) {
 	row, err := re.Db.Query("select * from problems")
 	if err != nil {
-		fmt.Println("0000000000",err)
 		return nil, err
 	}
 	defer row.Close()
