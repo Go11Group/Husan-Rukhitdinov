@@ -23,6 +23,7 @@ func (h *Handler) HandlerAPI() {
 	router := gin.Default()
 
 	userGroup := router.Group("/api/user")
+	
 
 	userGroup.POST("/createuser", h.CreateUser)
 	userGroup.GET("/readusers", h.ReadAllUser)
