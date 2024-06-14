@@ -58,11 +58,6 @@ func (re *CrudUsersRepo) ReadUsers() ([]model.Users, error) {
 		}
 		users = append(users, user)
 	}
-
-	if err = row.Err(); err != nil {
-		return nil, err
-	}
-
 	return users, nil
 }
 
