@@ -15,8 +15,8 @@ func NewUsersRepo(db *sql.DB) *CrudUsersRepo {
 }
 
 func (c *CrudUsersRepo) CreateUsers(user model.Users) error{
-	_, err := c.Db.Exec("insert into users(username,email,password_hash,created_at) values($1,$2,$3,$4)",
-		&user.Username, &user.Email, &user.Password, &user.CreatedAt)
+	_, err := c.Db.Exec("insert into users(username,email,password_hash) values($1,$2,$3)",
+		&user.Username, &user.Email, &user.Password)
 	if err != nil {
 		fmt.Println(err)
 		return  err

@@ -19,7 +19,6 @@ func main() {
 	lesson := postgres.NewLesson(db)
 	enrollment := postgres.NewEnrollments(db)
 
-	l := handler.NewGin(db, user, course,lesson,enrollment)
+	l := handler.NewGin(db, user, course, lesson, enrollment)
 	l.Run("localhost:8080")
 }
-   

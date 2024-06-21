@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"my_pro/model"
 	"net/http"
 
@@ -12,8 +13,9 @@ func (h *Handler) CreateUser(c *gin.Context) {
 
 	user := model.Users{}
 
-	err := c.ShouldBindJSON(user)
+	err := c.ShouldBindJSON(&user)
 	if err != nil {
+		fmt.Println("dfjdfm00000-----",err)	
 		c.String(http.StatusBadRequest, err.Error())
 	}
 	err = h.user.CreateUsers(user)
