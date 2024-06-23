@@ -10,13 +10,13 @@ import (
 func NewGin(db *sql.DB, user *postgres.User, course *postgres.Courses, lesson *postgres.Lessons, enrollment *postgres.Enrollments) *gin.Engine {
 	k := gin.Default()
 
-	handler := NewHandler(db, user, course, lesson,enrollment)
+	handler := NewHandler(db, user, course, lesson, enrollment)
 
 	// Users
 	k.GET("getAllUsers", handler.GetFilterAllUsers)
 	k.GET("getUser/:user_id", handler.GetUserById)
-	k.GET("getUserCourse/:user_id",handler.GetCourseByUsers)
-	k.GET("getSearchUser",handler.SearchUsers)
+	k.GET("getUserCourse/:user_id", handler.GetCourseByUsers)
+	k.GET("getSearchUser", handler.SearchUsers)
 	k.PUT("updateUser/:user_id", handler.UpdateUser)
 	k.POST("createUser", handler.CreateUser)
 	k.DELETE("deleteUser/:user_id", handler.DeleteUsers)

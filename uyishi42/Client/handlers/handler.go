@@ -10,7 +10,6 @@ import (
 
 func (h *Handler) Get(c *gin.Context) {
 	url := "http://localhost:8080" + c.Request.URL.String()
-
 	resp, err := http.Get(url)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
