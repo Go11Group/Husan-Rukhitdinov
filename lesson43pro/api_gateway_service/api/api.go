@@ -3,8 +3,9 @@ package api
 import (
 	"github.com/Go11Group/at_lesson/lesson43/api_gateway_service/api/handler"
 
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Routes() *http.Server {

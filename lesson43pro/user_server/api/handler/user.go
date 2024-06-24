@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"user_pro/models"
 
 	"github.com/gin-gonic/gin"
@@ -70,12 +71,20 @@ func (h *Handler) DeleteUser(c *gin.Context) {
 
 func (h *Handler) GetAllUser(c *gin.Context) {
 	allUser := models.User{}
-	allUser.Name = c.Param("name")
-	allUser.Phone = c.Param("phone")
-	allUser.Age = c.Param("age")
-	
+	allUser.Name = c.Query("name")
+	allUser.Phone = c.Query("phone")
+	ages := c.Query("age")
+	if len(ages) == 0 {
+		ages = "0"
+	}
+	age, err := strconv.Atoi(ages)
+	allUser.Age = age
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
 	res, err := h.User.GetAll(allUser)
-	if err != nil{
+	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
 	}
 	c.JSON(http.StatusOK, res)

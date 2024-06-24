@@ -2,9 +2,8 @@ package postgres
 
 import (
 	"database/sql"
+	"time"
 	"user_pro/models"
-
-	"github.com/google/uuid"
 )
 
 type UserRepo struct {
@@ -16,8 +15,8 @@ func NewUserRepo(db *sql.DB) *UserRepo {
 }
 
 func (u *UserRepo) Create(user *models.User) error {
-	_, err := u.Db.Exec("insert into user (id,name,phone,age) values ($1, $2, $3, $4)",
-		uuid.NewString(), user.Name, user.Phone, user.Age)
+	_, err := u.Db.Exec("insert into user (name,phone,age,created_at) values ($1, $2, $3, $4)",
+		user.Name, user.Phone, user.Age, time.Now())
 	if err != nil {
 		return err
 	}
@@ -35,7 +34,7 @@ func (u *UserRepo) GetById(id string) (*models.User, error) {
 }
 
 func (u *UserRepo) Update(user *models.User, id string) error {
-	_, err := u.Db.Exec("update user set id = $1, name = $2, phone = $3,age = $4", user.Id, user.Name, user.Phone, user.Age)
+	_, err := u.Db.Exec("update user set name = $1, phone = $2,age = $3,update_at = $4 where id = $5", user.Name, user.Phone, &user.Age, time.Now(), id)
 	if err != nil {
 		return err
 	}
@@ -43,19 +42,19 @@ func (u *UserRepo) Update(user *models.User, id string) error {
 }
 
 func (d *UserRepo) Delete(id string) error {
-	_, err := d.Db.Exec("delete from user where id = $1", id)
+	_, err := d.Db.Exec("update user set deleted_at = $1 where id = $2", 1, id)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *UserRepo) GetAll(f models.User) ([]models.User, error) {
+func (u *UserRepo) GetAll(f models.User) ([]models.User, error) {
 	var (
 		params = make(map[string]interface{})
 		arr    []interface{}
 	)
-	query := `select id, name from user `
+	query := `select id, name,phone,age created_at, update_at,delete_at from user where deleted_at = 0 `
 	filter := ` where true `
 
 	if len(f.Name) > 0 {
@@ -74,7 +73,7 @@ func (c *UserRepo) GetAll(f models.User) ([]models.User, error) {
 	query = query + filter
 
 	query, arr = ReplaceQueryParam(query, params)
-	rows, err := c.Db.Query(query, arr...)
+	rows, err := u.Db.Query(query, arr...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +82,7 @@ func (c *UserRepo) GetAll(f models.User) ([]models.User, error) {
 	var users []models.User
 	for rows.Next() {
 		var user models.User
-		err = rows.Scan(&user.Name, &user.Phone, &user.Age)
+		err = rows.Scan(&user.Name, &user.Phone, &user.Age, &user.CreatedAt, &user.UpdatedAt, &user.DeletedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -91,3 +90,4 @@ func (c *UserRepo) GetAll(f models.User) ([]models.User, error) {
 	}
 	return users, nil
 }
+
