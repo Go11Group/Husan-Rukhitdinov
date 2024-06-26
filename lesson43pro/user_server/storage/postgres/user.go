@@ -41,8 +41,8 @@ func (u *UserRepo) Update(user *models.User, id string) error {
 	return nil
 }
 
-func (d *UserRepo) Delete(id string) error {
-	_, err := d.Db.Exec("update user set deleted_at = $1 where id = $2", 1, id)
+func (u *UserRepo) Delete(id string) error {
+	_, err := u.Db.Exec("update user set deleted_at = $1 where id = $2", 1, id)
 	if err != nil {
 		return err
 	}

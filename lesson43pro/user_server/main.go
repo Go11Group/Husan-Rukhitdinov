@@ -13,7 +13,7 @@ func main() {
 	}
 
 	defer db.Close()
-	fmt.Println("Connect7ion!!!")
+	fmt.Println("Connection!!!")
 
 	user := postgres.NewUserRepo(db)
 
