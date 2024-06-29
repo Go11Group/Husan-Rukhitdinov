@@ -11,29 +11,8 @@ type BookRepo struct {
 	Db *sql.DB
 }
 
-func (b *BookRepo) CreateBook(user *pb.CreateBookRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
 
-func (b *BookRepo) UpdateBook(user *pb.UpdatedBookRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
 
-func (b *BookRepo) DeleteBook(user *pb.ByIdRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (b *BookRepo) GeBook(user *pb.BookFilterRequest) (*pb.BooksResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func NewBookRepo(db *sql.DB) *BookRepo {
-	return &BookRepo{Db: db}
-}
 
 func (b *BookRepo) Create(book *pb.CreateBookRequest) error {
 	_, err := b.Db.Exec("insert into book (title,author, published, created_at) values ($1,$2,$3,$4)",

@@ -14,7 +14,6 @@ type BookService struct {
 func NewBookService(st strorage.StorageI) *BookService {
 	return &BookService{Serv: st}
 }
-
 func (serv *BookService) CreatBook(ctc context.Context, in *pb.CreateBookRequest) (*pb.Void, error) {
 	return serv.Serv.BookI.CreateBook(in)
 }

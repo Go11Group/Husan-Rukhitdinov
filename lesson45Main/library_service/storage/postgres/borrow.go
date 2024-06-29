@@ -11,27 +11,7 @@ type BorrowRepo struct {
 	Db *sql.DB
 }
 
-func (b *BorrowRepo) CreateBorrow(user *pb.CreateBorrowRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (b *BorrowRepo) UpdateBorrow(user *pb.UpdatedBorrowRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (b *BorrowRepo) DeleteBorrow(user *pb.ByIdRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (b *BorrowRepo) GeBorrow(user *pb.BorrowFilterRequest) (*pb.BorrowsResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func NewBorrowRepo(db *sql.DB) *BorrowRepo {
+func NewBorrowRepo(db *sql.DB) *BorrowRepo{
 	return &BorrowRepo{Db: db}
 }
 

@@ -1,4 +1,4 @@
-package clients
+package main
 
 import (
 	pb "get-way/genproto"

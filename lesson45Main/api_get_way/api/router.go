@@ -1,9 +1,9 @@
 package api
 
 import (
-	"get-way/api/handlers"
 	"google.golang.org/grpc"
 
+	handler "get-way/api/handlers"
 	"github.com/gin-gonic/gin"
 )
 

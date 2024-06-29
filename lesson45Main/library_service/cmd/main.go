@@ -1,10 +1,9 @@
 package main
 
 import (
-	"library_service/config"
 	pb "library_service/genproto"
 	"library_service/service"
-	strorage "library_service/storage"
+	"library_service/storage/postgres"
 
 	"google.golang.org/grpc"
 
@@ -14,7 +13,7 @@ import (
 )
 
 func main() {
-	db, err := strorage.ConnectionDb(config.Config{})
+	db, err := postgres.ConnectDB()
 	if err != nil {
 		panic(err)
 	}
@@ -24,8 +23,8 @@ func main() {
 	}
 	s := grpc.NewServer()
 	pb.RegisterBorrowServiceServer(s, service.NewBorrowService(db))
-	pb.RegisterLibraryServiceServer(s, service.NewService(db))
-	pb.RegisterLibraryServiceServer(s, service.NewService(db))
+	pb.RegisterLibraryServiceServer(s, service.NewBookService(db))
+	pb.RegisterLibraryServiceServer(s, service.NewUserService(db))
 
 	log.Printf("server listening at %v", listen.Addr())
 

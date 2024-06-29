@@ -10,45 +10,45 @@ type StorageI struct {
 	BorrowI BorrowStorage
 }
 
-func (s StorageI) CreateUser(user *pb.CreateUserRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// func (s StorageI) CreateUser(user *pb.CreateUserRequest) (*pb.Void, error) {
+// 	//TODO implement me
+// 	panic("implement me")
+// }
 
-func (s StorageI) UpdateUser(user *pb.UpdatedUserRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// func (s StorageI) UpdateUser(user *pb.UpdatedUserRequest) (*pb.Void, error) {
+// 	//TODO implement me
+// 	panic("implement me")
+// }
 
-func (s StorageI) DeleteUser(user *pb.ByIdRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// func (s StorageI) DeleteUser(user *pb.ByIdRequest) (*pb.Void, error) {
+// 	//TODO implement me
+// 	panic("implement me")
+// }
 
-func (s StorageI) GetUser(user *pb.UserFilterRequest) (*pb.UsersResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// func (s StorageI) GetUser(user *pb.UserFilterRequest) (*pb.UsersResponse, error) {
+// 	//TODO implement me
+// 	panic("implement me")
+// }
 
-func (s StorageI) CreateBorrow(user *pb.CreateBorrowRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// func (s StorageI) CreateBorrow(user *pb.CreateBorrowRequest) (*pb.Void, error) {
+// 	//TODO implement me
+// 	panic("implement me")
+// }
 
-func (s StorageI) UpdateBorrow(user *pb.UpdatedBorrowRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// func (s StorageI) UpdateBorrow(user *pb.UpdatedBorrowRequest) (*pb.Void, error) {
+// 	//TODO implement me
+// 	panic("implement me")
+// }
 
-func (s StorageI) DeleteBorrow(user *pb.ByIdRequest) (*pb.Void, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// func (s StorageI) DeleteBorrow(user *pb.ByIdRequest) (*pb.Void, error) {
+// 	//TODO implement me
+// 	panic("implement me")
+// }
 
-func (s StorageI) GeBorrow(user *pb.BorrowFilterRequest) (*pb.BorrowsResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
+// func (s StorageI) GeBorrow(user *pb.BorrowFilterRequest) (*pb.BorrowsResponse, error) {
+// 	//TODO implement me
+// 	panic("implement me")
+// }
 
 type UserStorage interface {
 	CreateUser(user *pb.CreateUserRequest) (*pb.Void, error)

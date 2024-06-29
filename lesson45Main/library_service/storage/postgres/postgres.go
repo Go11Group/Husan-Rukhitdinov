@@ -1,11 +1,10 @@
-package main
+package postgres
 
 import (
 	"database/sql"
 	"fmt"
 	"library_service/config"
-	"library_service/storage"
-	"library_service/storage/postgres"
+	strorage "library_service/storage"
 
 	"strconv"
 
@@ -42,21 +41,21 @@ func ConnectDB() (*Storage, error) {
 
 func (s *Storage) User() strorage.UserStorage {
 	if s.user == nil {
-		s.user = postgres.NewUserRepo(s.Db)
+		s.user = NewUserRepo(s.Db)
 	}
 	return s.user
 }
 
 func (s *Storage) Borrow() strorage.BorrowStorage {
 	if s.borrow == nil {
-		s.borrow = postgres.NewBorrowRepo(s.Db)
+		s.borrow = NewBorrowRepo(s.Db)
 	}
 	return s.borrow
 }
 
 func (s *Storage) Book() strorage.BookStorage {
 	if s.book == nil {
-		s.book = postgres.NewBookRepo(s.Db)
+		s.book = NewBookRepo(s.Db)
 	}
 	return s.book
 }
