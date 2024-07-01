@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+
+option go_package="/genproto";
+package translate;
+
+service TranslateService {
+  rpc Translate (TranslateRequest) returns (TranslateResponse) {}
+}
+
+message TranslateRequest {
+  repeated string words = 1;
+}
+
+message TranslateResponse {
+  repeated string translations = 1;
+}
